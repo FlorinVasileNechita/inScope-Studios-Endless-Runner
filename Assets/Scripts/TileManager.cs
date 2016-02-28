@@ -2,15 +2,25 @@
 using System.Collections;
 
 public class TileManager : MonoBehaviour {
-    [SerializeField]
-    private GameObject leftTilePrefab;
-    [SerializeField]
-    private GameObject topTilePrefab;
+    private static TileManager instance;
+    public static TileManager Instance
+    {
+        get
+        {
+            if (!instance) {
+                instance = GameObject.FindObjectOfType<TileManager>();
+            }
+            return instance;
+        }
+    }
+
     public GameObject currentTile;
+
+    public GameObject[] tilePrefabs;
 
     // Use this for initialization
     void Start () {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 25; i++) {
             SpawnTile();
         }
 	}
@@ -21,7 +31,8 @@ public class TileManager : MonoBehaviour {
 	}
 
     public void SpawnTile() {
-        currentTile = (GameObject)Instantiate(leftTilePrefab, currentTile.transform.GetChild(0).transform.GetChild(0).transform.position, Quaternion.identity);
+        int randomIndex = Random.Range(0, 2);
+        currentTile = (GameObject)Instantiate(tilePrefabs[randomIndex], currentTile.transform.GetChild(0).transform.GetChild(randomIndex).transform.position, Quaternion.identity);
         
     }
 }
