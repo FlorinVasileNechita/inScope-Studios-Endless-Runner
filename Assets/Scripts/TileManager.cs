@@ -33,6 +33,7 @@ public class TileManager : MonoBehaviour {
     void Start () {
         CreateTiles(20);
 
+        // Spawn first bunch of tiles
         for (int i = 0; i < 10; i++) {
             SpawnTile();
         }
@@ -65,6 +66,11 @@ public class TileManager : MonoBehaviour {
             temp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(randomIndex).position;
             currentTile = temp;
         }
+
+        int spawnPickup = Random.Range(0, 10);
+        if (spawnPickup == 0) {
+            currentTile.transform.GetChild(1).gameObject.SetActive(true);
+        }
         
     }
 
@@ -80,5 +86,9 @@ public class TileManager : MonoBehaviour {
             leftTiles.Peek().SetActive(false);
 
         }
+    }
+
+    public void ResetGame() {
+        Application.LoadLevel(Application.loadedLevel);
     }
 }
