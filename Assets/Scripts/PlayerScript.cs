@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour {
     [SerializeField]
@@ -11,14 +12,20 @@ public class PlayerScript : MonoBehaviour {
     private bool isDead;
     public GameObject resetButton;
 
+    private int score;
+    public Text scoreText;
+
     void Start() {
         direction = Vector3.zero;
         isDead = false;
+        score = 0;
     }
 
     void Update() {
         // Handle mouse input
         if (Input.GetMouseButtonDown(0) && !isDead) {
+            score++;
+            scoreText.text = "Score: " + score;
             if (direction == Vector3.forward) {
                 direction = Vector3.left;
             }
@@ -34,6 +41,8 @@ public class PlayerScript : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if (other.tag == "Pickup") {
+            score += 3;
+            scoreText.text = "Score: " + score;
             other.gameObject.SetActive(false);
             Instantiate(getPickup, transform.position, Quaternion.identity);
         }
