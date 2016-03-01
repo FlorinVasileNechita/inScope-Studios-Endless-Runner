@@ -34,6 +34,7 @@ public class PlayerScript : MonoBehaviour {
             }
         }
 
+
         // Move the player
         float amountToMove = speed * Time.deltaTime;
         transform.Translate(direction * amountToMove);
@@ -43,6 +44,7 @@ public class PlayerScript : MonoBehaviour {
         if (other.tag == "Pickup") {
             score += 3;
             scoreText.text = "Score: " + score;
+            CombatTextManager.Instance.CreateText(other.transform.position, "+3", Color.green, false);
             other.gameObject.SetActive(false);
             Instantiate(getPickup, transform.position, Quaternion.identity);
         }
