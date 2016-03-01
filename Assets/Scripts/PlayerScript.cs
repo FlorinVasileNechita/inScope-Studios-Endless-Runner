@@ -15,6 +15,10 @@ public class PlayerScript : MonoBehaviour {
     private int score;
     public Text scoreText;
 
+    public Animator gameOverAnim;
+    public Text lastScoreText;
+    public Text bestText;
+
     void Start() {
         direction = Vector3.zero;
         isDead = false;
@@ -57,11 +61,26 @@ public class PlayerScript : MonoBehaviour {
 
             if (!Physics.Raycast(downRay, out hit)) {
                 isDead = true;
+                GameOver();
                 if (transform.childCount > 0) {
                     transform.GetChild(0).transform.parent = null;
                 }
                 resetButton.SetActive(true);
             }
         }
+    }
+
+    private void GameOver() {
+        gameOverAnim.SetTrigger("GameOver");
+        
+        lastScoreText.text = score.ToString();
+
+        int bestScore = PlayerPrefs.GetInt("BestScore", 0);
+
+        if (score > bestScore) {
+            PlayerPrefs.SetInt("BestScore", score);
+        }
+
+        bestText.text = PlayerPrefs.GetInt("BestScore", 0).ToString();
     }
 }
