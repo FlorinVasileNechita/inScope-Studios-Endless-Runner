@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class TileManager : MonoBehaviour {
     private static TileManager instance;
@@ -89,6 +90,6 @@ public class TileManager : MonoBehaviour {
     }
 
     public void ResetGame() {
-        Application.LoadLevel(Application.loadedLevel);
+        SceneManager.LoadScene(0);
     }
 }
